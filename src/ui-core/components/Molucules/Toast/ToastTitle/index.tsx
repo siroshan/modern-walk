@@ -1,0 +1,1 @@
+export { default as ToastTitle } from './ToastTitle.component'

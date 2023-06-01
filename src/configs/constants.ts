@@ -1,0 +1,1 @@
+export const MODEREN_WALK_USER_ID = 'MODEREN_WALK_USER_ID';
