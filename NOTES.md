@@ -14,3 +14,9 @@ pages/contact.tsx`
 
 ## Data Fetching
 - If you export a function called `getStaticProps` (Static Site Generation) from a  page, Next.js will pre-render this page at build time using the props returned by `getStaticProps`.
+- Usually can be used for home page, or any other pages where user specific data is not need.
+- If a page has dynamic routes and uses  `getStaticProps`, it needs to define a list of paths to be statically generated.
+- When you export a function called  `getStaticPaths`  (Static Site Generation) from a page that uses dynamic routes, Next.js will statically pre-render all the paths specified by  `getStaticPaths`.
+- It's useful for pre-rendering the specific products' pages for SEO purposes.
+- Next.js allows you to create or update static pages _after_ you’ve built your site. Incremental Static Regeneration (ISR) enables you to use static-generation on a per-page basis, **without needing to rebuild the entire site**. With ISR, you can retain the benefits of static while scaling to millions of pages.
+- If you export  `getServerSideProps` (Server-Side Rendering) function from a page, Next.js will pre-render this page on each request using the data returned by `getServerSideProps`.
