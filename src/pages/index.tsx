@@ -5,45 +5,16 @@ import { ProductService } from '@services/product';
 import { CategoryCard, ToastAction, useToast } from '@ui-core/components';
 import { MaxWidthLayout, SectionLayout } from '@ui-core/layout';
 import { ProductCardContainer } from '@ui-core/templates';
-import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
-const HomePage = () => {
-  const { toast } = useToast();
-  const [products, setProducts] = useState<IProduct[]>([]);
-
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['products', { limit: 20 }],
-    queryFn: () => ProductService.getProducts(20),
-  });
-
-  useEffect(() => {
-    if (!isLoading && Array.isArray(data)) {
-      const products = data.filter(
-        (prod: IProduct) =>
-          prod.category === "men's clothing" ||
-          prod.category === "women's clothing"
-      );
-      setProducts(products.slice(0, 4));
-    }
-  }, [isLoading, data]);
-
-  useEffect(() => {
-    if (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: new CustomError(error).message,
-        action: <ToastAction altText='Try again'>Try again</ToastAction>,
-      });
-    }
-  }, [error, isLoading]);
-
+export default function HomePage({
+  products,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <MaxWidthLayout>
         <SectionLayout heading='Flash Sale'>
-          <ProductCardContainer products={products} isLoading={isLoading} />
+          <ProductCardContainer products={products} />
         </SectionLayout>
         <SectionLayout heading='Categories'>
           <div className='grid w-full grid-cols-2 items-center justify-center gap-5'>
@@ -55,6 +26,15 @@ const HomePage = () => {
       </MaxWidthLayout>
     </>
   );
-};
+}
 
-export default HomePage;
+export const getStaticProps: GetStaticProps<{
+  products: IProduct[];
+}> = async () => {
+  const res = await ProductService.getProducts(20);
+  const products = res.filter(
+    (prod: IProduct) =>
+      prod.category === "men's clothing" || prod.category === "women's clothing"
+  );
+  return { props: { products: products.slice(0, 4) } };
+};
