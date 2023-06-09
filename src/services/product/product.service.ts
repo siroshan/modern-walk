@@ -14,6 +14,20 @@ export const getProducts = async (limit = 20): Promise<IProduct[]> => {
   }
 };
 
+export const getProduct = async (id: number): Promise<IProduct> => {
+  try {
+    const { data } = await axiosProductInstance.get<IProduct>(
+      `products/${id}`
+    );
+    console.log('data>>>>>>>', data);
+
+    return data;
+  } catch (err) {
+    console.log('error', err);
+    throw err;
+  }
+};
+
 export const getProductsByCategory = async (
   category: string
 ): Promise<IProduct[]> => {
