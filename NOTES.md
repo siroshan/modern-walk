@@ -20,3 +20,26 @@ pages/contact.tsx`
 - It's useful for pre-rendering the specific products' pages for SEO purposes.
 - Next.js allows you to create or update static pages _after_ you’ve built your site. Incremental Static Regeneration (ISR) enables you to use static-generation on a per-page basis, **without needing to rebuild the entire site**. With ISR, you can retain the benefits of static while scaling to millions of pages.
 - If you export  `getServerSideProps` (Server-Side Rendering) function from a page, Next.js will pre-render this page on each request using the data returned by `getServerSideProps`.
+
+## Custom App
+Next.js uses the  `App`  component to initialize pages. You can override it and control the page initialization and:
+
+-   Persist layouts between page changes
+-   Keeping state when navigating pages
+-   Inject additional data into pages
+-   Add global CSS 
+
+Adding a custom `getInitialProps` in your `App` will disable Automatic Static Optimization in pages without static generation.
+
+`App` does not support Next.js Data Fetching methods like `getStaticProps` or `getServerSideProps`
+
+## Custom Document
+A custom `Document` can update the `<html>` and `<body>` tags used to render a Page. This file is only rendered on the server, so event handlers like `onClick` cannot be used in `_document`.
+
+`Document` currently does not support Next.js Data Fetching methodslike `getStaticProps`or `getServerSideProps`
+
+## Custom Server
+
+It should only be used when the integrated router of Next.js can't meet your app requirements.
+
+A custom server will remove important performance optimizations, like **serverless functions** and **Automatic Static Optimization**
