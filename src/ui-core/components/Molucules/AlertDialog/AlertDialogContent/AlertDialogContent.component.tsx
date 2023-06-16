@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef } from 'react';
 import { AlertDialogPortal } from '../AlerDialogPortal';
 import { AlertDialogOverlay } from '../AlertDialogOverlay';

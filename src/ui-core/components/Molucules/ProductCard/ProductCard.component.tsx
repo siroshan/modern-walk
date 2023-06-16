@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import { IProduct } from '../../../../models/Product';
 import { Button } from '../../Atoms/Button';

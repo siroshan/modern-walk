@@ -1,3 +1,5 @@
+'use client';
+
 import { categories } from '@configs/config';
 import { IProduct } from '@models/Product';
 import { CustomError } from '@services/api';
@@ -5,16 +7,14 @@ import { ProductService } from '@services/product';
 import { ToastAction, useToast } from '@ui-core/components';
 import { MaxWidthLayout, SectionLayout } from '@ui-core/layout';
 import { ProductCardContainer } from '@ui-core/templates';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-const CategoryPage = () => {
+const CategoryPage = ({ params }: { params: { cat: string } }) => {
   const { toast } = useToast();
   const router = useRouter();
-  const category = categories.find(
-    (category) => category.link === router.query.cat
-  );
+  const category = categories.find((category) => category.link === params.cat);
   const [products, setProducts] = useState<IProduct[]>([]);
 
   const { isLoading, error, data } = useQuery(

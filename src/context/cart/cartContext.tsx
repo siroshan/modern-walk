@@ -1,3 +1,5 @@
+'use client';
+
 import { ICartItem } from '../../models/CartItem';
 import { createContext, FC, useContext, useMemo, useReducer } from 'react';
 import { CartContextType, CartProviderProps } from './cartContext.types';
@@ -67,7 +69,7 @@ const cartReducer = (state: any, action: { type: string; payload: any }) => {
       return {
         cartItems: payload.cartItems,
       };
-      
+
     default:
       return {
         ...state,

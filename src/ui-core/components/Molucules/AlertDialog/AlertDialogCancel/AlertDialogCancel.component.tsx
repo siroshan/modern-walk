@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, forwardRef } from 'react';
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 import { buttonVariants } from '../../../Atoms/Button';
