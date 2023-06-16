@@ -19,8 +19,6 @@ export const getProduct = async (id: number): Promise<IProduct> => {
     const { data } = await axiosProductInstance.get<IProduct>(
       `products/${id}`
     );
-    console.log('data>>>>>>>', data);
-
     return data;
   } catch (err) {
     console.log('error', err);

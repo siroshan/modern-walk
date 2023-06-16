@@ -51,7 +51,6 @@ const SignInPage = () => {
   });
 
   const onsubmit = async (data: FieldValues) => {
-    console.log('submit clicked');
     signIn({ email: data.email, password: data.password });
   };
 
