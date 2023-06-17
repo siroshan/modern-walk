@@ -1,35 +1,47 @@
+'use client';
+
 import { User, UserCog, LogOut, ShoppingCart, X } from 'lucide-react';
-import { Button } from '../../components/Atoms/Button';
 import { useUser } from '../../../context/user';
-import { NavBar } from '../../components/Organisms/NavBar';
-import { Logo } from '../../components/Molucules/Logo';
-import { Popover } from '../../components/Organisms/Popover';
-import { PopoverTrigger } from '../../components/Molucules/Popover/PopoverTrigger';
-import { PopoverContent } from '../../components/Molucules/Popover/PopoverContent';
-import { PopoverClose } from '../../components/Molucules/Popover/PopoverClose';
-import { CartProductCard } from '../../components/Molucules/CartProductCard';
-import { AlertDialog } from '../../components/Molucules/AlertDialog/AlertDialog';
-import { AlertDialogTrigger } from '../../components/Molucules/AlertDialog/AlertDialogTrigger';
-import { AlertDialogContent } from '../../components/Molucules/AlertDialog/AlertDialogContent';
-import { AlertDialogHeader } from '../../components/Molucules/AlertDialog/AlertDialogHeader';
-import { AlertDialogTitle } from '../../components/Molucules/AlertDialog/AlertDialogTitle';
-import { AlertDialogDescription } from '../../components/Molucules/AlertDialog/AlertDialogDescription';
-import { AlertDialogFooter } from '../../components/Molucules/AlertDialog/AlertDialogFooter';
-import { AlertDialogCancel } from '../../components/Molucules/AlertDialog/AlertDialogCancel';
-import { AlertDialogAction } from '../../components/Molucules/AlertDialog/AlertDialogAction';
 import { useCart } from '../../../context/cart';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Button,
+  CartProductCard,
+  Logo,
+  NavBar,
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from '@ui-core/components';
+import { useEffect } from 'react';
 
 const NavBarTemplate = () => {
   const router = useRouter();
   const UserCTX = useUser();
   const { cartItems, clearCart } = useCart();
-
+  const pathname = usePathname();
   const handleLogOut = () => {
     UserCTX.signOut();
     router.push('/signin');
   };
+  const isRemoveLayout = [`/sign-in`, `/sign-up`].includes(pathname!);
+
+  if (isRemoveLayout) {
+    return null;
+  }
+
   return (
     <NavBar>
       <div className='relative h-16 w-full'>
@@ -48,7 +60,7 @@ const NavBarTemplate = () => {
                   <span className='sr-only'>Open User Cart</span>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align='end' className='p-0 max-w-md'>
+              <PopoverContent align='end' className='max-w-md p-0'>
                 <>
                   <div className='flex flex-row items-center justify-between p-2'>
                     <div className='p-2 font-bold'>Cart</div>
@@ -95,7 +107,10 @@ const NavBarTemplate = () => {
                               </Button>
                             </AlertDialogCancel>
                             <AlertDialogAction>
-                              <Button variant='dangerOutline' onClick={clearCart}>
+                              <Button
+                                variant='dangerOutline'
+                                onClick={clearCart}
+                              >
                                 Confirm
                               </Button>
                             </AlertDialogAction>

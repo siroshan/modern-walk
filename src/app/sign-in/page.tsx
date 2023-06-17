@@ -1,3 +1,5 @@
+'use client';
+
 import { useUser } from '@context/user';
 import { IUser } from '@models/User';
 import { CustomError } from '@services/api';
@@ -13,7 +15,7 @@ import {
   useToast,
 } from '@ui-core/components';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -49,7 +51,6 @@ const SignInPage = () => {
   });
 
   const onsubmit = async (data: FieldValues) => {
-    console.log('submit clicked');
     signIn({ email: data.email, password: data.password });
   };
 

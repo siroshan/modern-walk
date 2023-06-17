@@ -1,3 +1,5 @@
+'use client';
+
 import * as ToastPrimitives from '@radix-ui/react-toast';
 import * as React from "react"
 import { X } from "lucide-react"

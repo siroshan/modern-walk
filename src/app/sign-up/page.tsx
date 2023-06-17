@@ -1,8 +1,10 @@
+'use client'
+
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useRef } from 'react';
 import { useUser } from '@context/user';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { UserService } from '@services/user';
 import { IUser } from '@models/User';
 import { Button, Input, Label, Typography } from '@ui-core/components';
