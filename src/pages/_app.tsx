@@ -8,6 +8,7 @@ import { NavLayout } from '@ui-core/layout';
 import React from 'react';
 
 import '@styles/globals.css';
+import { NextPageContext } from 'next';
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -19,7 +20,11 @@ const roboto = Roboto({
 // Create a client
 const queryClient = new QueryClient();
 
-export default function App({ Component, pageProps, router }: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+  router,
+}: AppProps) {
   const isRemoveLayout = [`/sign-in`, `/sign-out`].includes(router.pathname);
 
   const LayoutComponent = isRemoveLayout ? React.Fragment : NavLayout;
