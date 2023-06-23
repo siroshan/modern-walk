@@ -5,7 +5,9 @@ import Link from 'next/link';
 
 const CategoryCard: FC<{ category: CategoryCardProps }> = ({ category }) => {
   const bgColor =
-    category.title === "men's clothing" ? 'bg-[#2BD9AF]' : 'bg-[#FF5E84]';
+    category.title === "men's clothing"
+      ? 'bg-category-men'
+      : 'bg-category-women';
   return (
     <Link
       href={`categories/${category.link}`}
