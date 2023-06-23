@@ -5,28 +5,23 @@ import { ProductService } from '@services/product';
 import { CategoryCard, ToastAction, useToast } from '@ui-core/components';
 import { MaxWidthLayout, SectionLayout } from '@ui-core/layout';
 import { ProductCardContainer } from '@ui-core/templates';
-import { useEffect, useState } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
-const HomePage = () => {
+type PageProps = {
+  products: IProduct[];
+};
+
+const HomePage = ({
+  products,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { toast } = useToast();
-  const [products, setProducts] = useState<IProduct[]>([]);
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['products', { limit: 20 }],
     queryFn: () => ProductService.getProducts(20),
   });
-
-  useEffect(() => {
-    if (!isLoading && Array.isArray(data)) {
-      const products = data.filter(
-        (prod: IProduct) =>
-          prod.category === "men's clothing" ||
-          prod.category === "women's clothing"
-      );
-      setProducts(products.slice(0, 4));
-    }
-  }, [isLoading, data]);
 
   useEffect(() => {
     if (error) {
@@ -55,6 +50,15 @@ const HomePage = () => {
       </MaxWidthLayout>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
+  const products = await ProductService.getProducts(20);
+  const filteredProducts = products.filter(
+    (prod: IProduct) =>
+      prod.category === "men's clothing" || prod.category === "women's clothing"
+  );
+  return { props: { products: filteredProducts } };
 };
 
 export default HomePage;
