@@ -58,7 +58,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async () => {
     (prod: IProduct) =>
       prod.category === "men's clothing" || prod.category === "women's clothing"
   );
-  return { props: { products: filteredProducts } };
+  return { props: { products: filteredProducts.slice(0, 4) } };
 };
 
 export default HomePage;
