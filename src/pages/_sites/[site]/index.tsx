@@ -5,7 +5,12 @@ import { ProductService } from '@services/product';
 import { CategoryCard, ToastAction, useToast } from '@ui-core/components';
 import { MaxWidthLayout, SectionLayout } from '@ui-core/layout';
 import { ProductCardContainer } from '@ui-core/templates';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import { ParsedUrlQuery } from 'querystring';
+
+interface Params extends ParsedUrlQuery {
+  site: string;
+}
 
 export default function HomePage({
   products,
@@ -37,4 +42,8 @@ export const getStaticProps: GetStaticProps<{
       prod.category === "men's clothing" || prod.category === "women's clothing"
   );
   return { props: { products: products.slice(0, 4) } };
+};
+
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
+  return { paths: [], fallback: 'blocking' };
 };
