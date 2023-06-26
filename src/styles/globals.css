@@ -56,6 +56,9 @@
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
 
+    --category-men: #2bd9af;
+    --category-women: #ff5e84;
+
     --ring: 215 20.2% 65.1%;
 
     --radius: 8px;

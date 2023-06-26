@@ -5,7 +5,7 @@ import { useCart } from '../../../../context/cart';
 
 const ProductCard: FC<{ product: IProduct }> = ({ product }) => {
   const bgColor =
-    product.category === "men's clothing" ? 'bg-[#2BD9AF]' : 'bg-[#FF5E84]';
+    product.category === "men's clothing" ? 'bg-category-men' : 'bg-category-women';
   const { addToCart } = useCart();
 
   return (
