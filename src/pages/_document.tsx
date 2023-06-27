@@ -1,4 +1,5 @@
 import { TenantService } from '@services/tenant';
+import { RootStyleLoader } from '@ui-core/layout';
 import Document, {
   Html,
   Head,
