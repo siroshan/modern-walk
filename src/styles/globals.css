@@ -11,7 +11,7 @@
     --background-elephant-contrast: 210, 14%, 97%;
     --background-elephant-white: 0, 0%, 78%;
 
-    --primary: 29 84% 52%;
+    --primary: 72 5% 21%;
     --primary-hover: 29 98% 48%;
     --primary-selected: 29 100% 41%;
     --primary-disabled: 29 84% 81%;
@@ -56,8 +56,8 @@
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --category-men: #2bd9af;
-    --category-women: #ff5e84;
+    --category-men: 166, 70%, 51%;
+    --category-women: 346, 100%, 68%;
 
     --ring: 215 20.2% 65.1%;
 

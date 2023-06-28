@@ -69,8 +69,8 @@ module.exports = {
           foreground: 'hsl(var(--card-foreground))',
         },
         category: {
-          men: 'var(--category-men)',
-          women: 'var(--category-women)',
+          men: 'hsl(var(--category-men))',
+          women: 'hsl(var(--category-women))',
         },
       },
       borderRadius: {
