@@ -20,10 +20,14 @@ export default async function middleware(req: NextRequest) {
   const hostname = req.headers.get('host');
 
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
-  const path = url.pathname;
+  let path = url.pathname;
 
   const currentHost = hostname?.split('.')[0];
 
+  if (path.includes('_sites/')) {
+    path = path.replace('_sites/', '');
+  }
+  
   // rewrite everything else to `/_sites/[site] dynamic route
   return NextResponse.rewrite(
     new URL(`/_sites/${currentHost}${path}`, req.url)
