@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { IProduct } from '../../../../models/Product';
 import { Button } from '../../Atoms/Button';
 import { useCart } from '../../../../context/cart';
+import { getCategoryColor } from '@configs/config';
 
 const ProductCard: FC<{ product: IProduct }> = ({ product }) => {
-  const bgColor =
-    product.category === "men's clothing" ? 'bg-category-men' : 'bg-category-women';
+  const bgColor = getCategoryColor(product.category)
   const { addToCart } = useCart();
 
   return (
