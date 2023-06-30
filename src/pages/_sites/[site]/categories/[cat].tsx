@@ -2,52 +2,47 @@ import { categories } from '@configs/config';
 import { IProduct } from '@models/Product';
 import { CustomError } from '@services/api';
 import { ProductService } from '@services/product';
+import { TenantService } from '@services/tenant';
 import { ToastAction, useToast } from '@ui-core/components';
 import { MaxWidthLayout, SectionLayout } from '@ui-core/layout';
 import { ProductCardContainer } from '@ui-core/templates';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
-const CategoryPage = () => {
-  const { toast } = useToast();
-  const router = useRouter();
-  const category = categories.find(
-    (category) => category.link === router.query.cat
-  );
-  const [products, setProducts] = useState<IProduct[]>([]);
+interface Params extends ParsedUrlQuery {
+  cat: string;
+}
 
-  const { isLoading, error, data } = useQuery(
-    ['products', { category: category?.title }],
-    () => ProductService.getProductsByCategory(category?.title || '')
-  );
+type Props = {
+  products: IProduct[];
+  category: string;
+};
 
-  useEffect(() => {
-    if (!isLoading && Array.isArray(data)) {
-      setProducts(data);
-    }
-  }, [isLoading, data]);
-
-  useEffect(() => {
-    if (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: new CustomError(error).message,
-        action: <ToastAction altText='Try again'>Try again</ToastAction>,
-      });
-    }
-  }, [error, isLoading]);
-
+export default function CategoryPage({
+  products,
+  category,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <MaxWidthLayout>
-        <SectionLayout heading={category?.title || ''}>
-          <ProductCardContainer products={products} isLoading={isLoading} />
+        <SectionLayout heading={category || ''}>
+          <ProductCardContainer products={products} />
         </SectionLayout>
       </MaxWidthLayout>
     </>
   );
-};
+}
 
-export default CategoryPage;
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  ctx: GetServerSidePropsContext<Params>
+) => {
+  const subdomain = ctx?.req?.headers?.host?.split('.')[0];
+  const tenantId = await TenantService.getTenantIdBySubdomain(subdomain!);
+  const { cat } = ctx.params!;
+  const products = await ProductService.getProductsByCategory(tenantId, cat);
+  return { props: { products: products, category: cat } };
+};
