@@ -71,6 +71,8 @@ module.exports = {
         category: {
           men: 'hsl(var(--category-men))',
           women: 'hsl(var(--category-women))',
+          electronics: 'hsl(var(--category-electronics))',
+          jewelery: 'hsl(var(--category-jewelery))',
         },
       },
       borderRadius: {

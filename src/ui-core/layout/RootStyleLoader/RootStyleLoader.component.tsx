@@ -7,6 +7,8 @@ const RootStyleLoader = ({ theme }: { theme: ITenantTheme }) => {
       {`:root {
           --category-men: ${theme?.colorCategoryMen};
           --category-women: ${theme?.colorCategoryWomen};
+          --category-jewelery:  ${theme?.colorCategoryJewelery};
+          --category-electronics:  ${theme?.colorCategoryElectronics};
         }`}
     </style>
   );
