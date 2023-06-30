@@ -1,13 +1,11 @@
+import { axiosInstance } from '@services/api/api';
 import { IProduct } from '../../models/Product';
-import { axiosProductInstance } from '../api';
-import { QueryKey } from 'react-query';
+import { ITenant } from '@models/Tenant';
 
-export const getProducts = async (limit = 20): Promise<IProduct[]> => {
+export const getProductsByTenant = async (id: number): Promise<IProduct[]> => {
   try {
-    const { data } = await axiosProductInstance.get<IProduct[]>(
-      `products?limit=${limit}`
-    );
-    return data;
+    const { data } = await axiosInstance.get<ITenant>(`tenants/${id}`);
+    return data.products;
   } catch (err) {
     console.log('error', err);
     throw err;
@@ -16,11 +14,8 @@ export const getProducts = async (limit = 20): Promise<IProduct[]> => {
 
 export const getProduct = async (id: number): Promise<IProduct> => {
   try {
-    const { data } = await axiosProductInstance.get<IProduct>(
-      `products/${id}`
-    );
+    const { data } = await axiosInstance.get<IProduct>(`products/${id}`);
     console.log('data>>>>>>>', data);
-
     return data;
   } catch (err) {
     console.log('error', err);
@@ -29,13 +24,15 @@ export const getProduct = async (id: number): Promise<IProduct> => {
 };
 
 export const getProductsByCategory = async (
+  tenantId: number,
   category: string
 ): Promise<IProduct[]> => {
   try {
-    const { data } = await axiosProductInstance.get<IProduct[]>(
-      `https://fakestoreapi.com/products/category/${category}`
+    const { data } = await axiosInstance.get<ITenant>(`tenants/${tenantId}`);
+    const products = data.products.filter(
+      (product) => product.category === category
     );
-    return data;
+    return products;
   } catch (err) {
     console.log('error', err);
     throw err;
